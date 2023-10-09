@@ -60,14 +60,13 @@ Rails.application.configure do
 #   port: 587,
 #   domain: 'your-domain.com',
 #   user_name: 'mercymugambi2016@gmail.com',
-#   password: '773833200723460025SHANICE',
 #   authentication: 'plain',
 #   enable_starttls_auto: true
 # }
 
 
-# # Set the default URL host for Devise confirmation emails.
-# config.action_mailer.default_url_options = { host: 'localhost:3000' }
+# Set the default URL host for Devise confirmation emails.
+config.action_mailer.default_url_options = { host: 'localhost:3000' }
 # config.action_mailer.logger = ActiveSupport::Logger.new(STDOUT)
 
 
