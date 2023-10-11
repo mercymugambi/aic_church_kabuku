@@ -3,6 +3,6 @@ class LeadershipPosition < ApplicationRecord
     validates :position_code, uniqueness: true
 
     
-    has_many :members
+    belongs_to :member
     belongs_to :user
   end
