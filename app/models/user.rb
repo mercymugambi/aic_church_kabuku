@@ -10,4 +10,6 @@ class User < ApplicationRecord
   belongs_to :member
   has_many :devotions
   has_many :created_fellowship_groups, class_name: 'FellowshipGroup', foreign_key: 'created_by_id'
+  has_many :created_events, class_name: 'Event', foreign_key: 'created_by_id'
+  has_many :created_devotions, class_name: 'Devotion', foreign_key: 'created_by_id'
 end
