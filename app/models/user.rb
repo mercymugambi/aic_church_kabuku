@@ -7,7 +7,6 @@ class User < ApplicationRecord
   validates :firstname, presence: true
   validates :lastname, presence: true
 
-
+  belongs_to :member
   has_many :devotions
-  belongs_to :user
 end
