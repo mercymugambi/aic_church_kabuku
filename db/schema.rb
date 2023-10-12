@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_12_170214) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_12_183728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,10 +64,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_170214) do
     t.string "email"
     t.string "fellowship_group"
     t.boolean "baptised"
-    t.bigint "leadership_position_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["leadership_position_id"], name: "index_members_on_leadership_position_id"
+  end
+
+  create_table "members_leadership_positions", id: false, force: :cascade do |t|
+    t.bigint "member_id"
+    t.bigint "leadership_position_id"
+    t.index ["member_id", "leadership_position_id"], name: "index_member_positions", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -89,6 +93,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_170214) do
   add_foreign_key "devotions", "users", column: "created_by_id"
   add_foreign_key "events", "users", column: "created_by_id"
   add_foreign_key "fellowship_groups", "users", column: "created_by_id"
-  add_foreign_key "members", "leadership_positions"
   add_foreign_key "users", "members", on_delete: :nullify
 end
