@@ -4,7 +4,7 @@ class CreateLeadershipPositions < ActiveRecord::Migration[7.0]
       t.string :position_name
       t.text :description
       t.string :position_code
-
+      
       t.timestamps
     end
   end
