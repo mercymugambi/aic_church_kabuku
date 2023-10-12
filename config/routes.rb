@@ -10,6 +10,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       # Resource route for listing users (index action only)
       resources :users, only: [:index]
+      resources :members
+      resources :devotions
+      resources :leadership_positions
+      resources :fellowship_groups
+      resources :events
     end
   end
 end
