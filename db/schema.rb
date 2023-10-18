@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_12_183728) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_18_084122) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,6 +43,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_12_183728) do
     t.string "group_code"
     t.index ["created_by_id"], name: "index_fellowship_groups_on_created_by_id"
     t.index ["group_code"], name: "index_fellowship_groups_on_group_code", unique: true
+  end
+
+  create_table "fellowship_groups_members", id: false, force: :cascade do |t|
+    t.bigint "fellowship_group_id", null: false
+    t.bigint "member_id", null: false
+    t.index ["fellowship_group_id", "member_id"], name: "index_fg_members_on_fg_id_and_member_id"
+    t.index ["member_id", "fellowship_group_id"], name: "index_fg_members_on_member_id_and_fg_id"
   end
 
   create_table "leadership_positions", force: :cascade do |t|
