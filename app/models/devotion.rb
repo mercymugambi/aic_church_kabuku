@@ -1,5 +1,4 @@
 class Devotion < ApplicationRecord
-  
   belongs_to :created_by, class_name: 'User'
 
   validate :check_created_by
