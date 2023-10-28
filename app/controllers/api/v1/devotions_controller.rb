@@ -3,6 +3,7 @@ class Api::V1::DevotionsController < ApplicationController
     @devotions = Devotion.all
     render json: @devotions
   end
+
   def create
     @devotions = Devotion.new(devotions_params)
     @devotions.created_by = current_user.id

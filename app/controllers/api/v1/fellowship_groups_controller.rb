@@ -3,6 +3,7 @@ class Api::V1::FellowshipGroupsController < ApplicationController
     @fellowship_groups = FellowshipGroup.all
     render json: @fellowship_groups
   end
+
   def create
     @fellowship_groups = FellowshipGroup.new(groups_params)
     @fellowship_groups.created_by = current_user.id
