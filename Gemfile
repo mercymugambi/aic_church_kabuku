@@ -75,3 +75,5 @@ end
 gem "devise" 
 
 gem 'dotenv-rails', groups: [:development, :test]
+
+gem 'rubocop', '>= 1.0', '< 2.0'
