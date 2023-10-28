@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_11_183124) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_18_084122) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -45,15 +45,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_11_183124) do
     t.index ["group_code"], name: "index_fellowship_groups_on_group_code", unique: true
   end
 
+  create_table "fellowship_groups_members", id: false, force: :cascade do |t|
+    t.bigint "fellowship_group_id", null: false
+    t.bigint "member_id", null: false
+    t.index ["fellowship_group_id", "member_id"], name: "index_fg_members_on_fg_id_and_member_id"
+    t.index ["member_id", "fellowship_group_id"], name: "index_fg_members_on_member_id_and_fg_id"
+  end
+
   create_table "leadership_positions", force: :cascade do |t|
     t.string "position_name"
     t.text "description"
     t.string "position_code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
+    t.bigint "created_by_id"
+    t.index ["created_by_id"], name: "index_leadership_positions_on_created_by_id"
     t.index ["position_code"], name: "index_leadership_positions_on_position_code", unique: true
-    t.index ["user_id"], name: "index_leadership_positions_on_user_id"
   end
 
   create_table "members", force: :cascade do |t|
@@ -64,10 +71,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_11_183124) do
     t.string "email"
     t.string "fellowship_group"
     t.boolean "baptised"
-    t.bigint "leadership_position_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["leadership_position_id"], name: "index_members_on_leadership_position_id"
+  end
+
+  create_table "members_leadership_positions", id: false, force: :cascade do |t|
+    t.bigint "member_id"
+    t.bigint "leadership_position_id"
+    t.index ["member_id", "leadership_position_id"], name: "index_member_positions", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -76,24 +87,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_11_183124) do
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.string "confirmation_token"
-    t.datetime "confirmed_at"
-    t.datetime "confirmation_sent_at"
-    t.string "unconfirmed_email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "firstname"
     t.string "lastname"
-    t.bigint "member_id", null: false
+    t.bigint "member_id"
+    t.boolean "super_admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["member_id"], name: "index_users_on_member_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "devotions", "users", column: "created_by_id"
   add_foreign_key "events", "users", column: "created_by_id"
   add_foreign_key "fellowship_groups", "users", column: "created_by_id"
-  add_foreign_key "leadership_positions", "users"
-  add_foreign_key "members", "leadership_positions"
-  add_foreign_key "users", "members"
+  add_foreign_key "users", "members", on_delete: :nullify
 end

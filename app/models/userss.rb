@@ -5,5 +5,5 @@ class Userss < ApplicationRecord
   # validates :lastname, presence: true
   # validates :email, presence: true, uniqueness: true
   # validates :password_digest, presence: true
-#   validates :role_id, presence: true
+  #   validates :role_id, presence: true
 end
